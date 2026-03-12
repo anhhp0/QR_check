@@ -1,403 +1,427 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Daiwa Tem QR Check</title>
+    <title>Kiểm tra trùng tem QR</title>
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <style>
-/* Base Reset */
-:root {
-    --bg-color: #0f172a; /* Slate 900 */
-    --card-bg: rgba(30, 41, 59, 0.7); /* Slate 800 with opacity */
-    --card-border: rgba(255, 255, 255, 0.1);
-    --text-primary: #f8fafc; /* Slate 50 */
-    --text-secondary: #94a3b8; /* Slate 400 */
-    --primary-color: #3b82f6; /* Blue 500 */
-    --primary-hover: #2563eb; /* Blue 600 */
-    --danger-color: #ef4444; /* Red 500 */
-    --danger-hover: #dc2626; /* Red 600 */
-    --success-color: #10b981; /* Emerald 500 */
-    --input-bg: rgba(15, 23, 42, 0.6);
-    --ring-color: rgba(59, 130, 246, 0.5);
-}
+        /* Base Reset */
+        :root {
+            --bg-color: #0f172a;
+            /* Slate 900 */
+            --card-bg: rgba(30, 41, 59, 0.7);
+            /* Slate 800 with opacity */
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            /* Slate 50 */
+            --text-secondary: #94a3b8;
+            /* Slate 400 */
+            --primary-color: #3b82f6;
+            /* Blue 500 */
+            --primary-hover: #2563eb;
+            /* Blue 600 */
+            --danger-color: #ef4444;
+            /* Red 500 */
+            --danger-hover: #dc2626;
+            /* Red 600 */
+            --success-color: #10b981;
+            /* Emerald 500 */
+            --input-bg: rgba(15, 23, 42, 0.6);
+            --ring-color: rgba(59, 130, 246, 0.5);
+        }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
-    -webkit-tap-highlight-color: transparent; /* Remove blue highlight on mobile */
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            /* Remove blue highlight on mobile */
+        }
 
-body {
-    background-color: var(--bg-color);
-    color: var(--text-primary);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    background-image: radial-gradient(circle at top right, rgba(59, 130, 246, 0.15), transparent 40%),
-                      radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.1), transparent 40%);
-    background-attachment: fixed;
-}
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            background-image: radial-gradient(circle at top right, rgba(59, 130, 246, 0.15), transparent 40%),
+                radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.1), transparent 40%);
+            background-attachment: fixed;
+        }
 
-.app-container {
-    width: 100%;
-    max-width: 480px; /* Mobile focused max width */
-    min-height: 100vh;
-    padding: 24px 20px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            /* Mobile focused max width */
+            min-height: 100vh;
+            padding: 24px 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
 
-/* Glassmorphism Utilities */
-.glass-panel {
-    background: var(--card-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--card-border);
-    border-radius: 16px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
 
-/* Typography */
-h1 {
-    font-size: 1.875rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    background: linear-gradient(to right, #60a5fa, #3b82f6);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-align: center;
-}
+        /* Typography */
+        h1 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-align: center;
+        }
 
-h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    color: var(--text-primary);
-}
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
 
-p.subtitle {
-    color: var(--text-secondary);
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 0.95rem;
-}
+        p.subtitle {
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
 
-/* Buttons */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 20px;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    user-select: none;
-}
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
 
-.btn:active {
-    transform: scale(0.98);
-}
+        .btn:active {
+            transform: scale(0.98);
+        }
 
-.btn-primary {
-    background-color: var(--primary-color);
-    color: white;
-    box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.39);
-}
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.39);
+        }
 
-.btn-primary:hover {
-    background-color: var(--primary-hover);
-    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.23);
-}
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.23);
+        }
 
-.btn-danger {
-    background-color: var(--danger-color);
-    color: white;
-    box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
-}
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+        }
 
-.btn-warning {
-    background-color: #f59e0b; /* Amber */
-    color: white;
-}
+        .btn-warning {
+            background-color: #f59e0b;
+            /* Amber */
+            color: white;
+        }
 
-.btn-icon {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+        .btn-icon {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-.btn-icon svg {
-    width: 20px;
-    height: 20px;
-}
+        .btn-icon svg {
+            width: 20px;
+            height: 20px;
+        }
 
-.w-full {
-    width: 100%;
-}
+        .w-full {
+            width: 100%;
+        }
 
-.btn-back {
-    background: transparent;
-    border: 1px solid var(--card-border);
-    color: var(--text-secondary);
-    padding: 8px 16px;
-    font-size: 0.875rem;
-    margin-bottom: 1rem;
-    align-self: flex-start;
-}
-.btn-back:hover {
-    background: rgba(255,255,255,0.05);
-    color: var(--text-primary);
-}
+        .btn-back {
+            background: transparent;
+            border: 1px solid var(--card-border);
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            align-self: flex-start;
+        }
 
-/* Forms */
-.form-group {
-    margin-bottom: 1.5rem;
-}
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
 
-.form-label {
-    display: block;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    margin-bottom: 0.5rem;
-}
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
 
-.form-input {
-    width: 100%;
-    background-color: var(--input-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 12px;
-    padding: 14px 16px;
-    color: var(--text-primary);
-    font-size: 1rem;
-    transition: all 0.2s ease;
-    outline: none;
-}
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
 
-.form-input:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px var(--ring-color);
-}
+        .form-input {
+            width: 100%;
+            background-color: var(--input-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            outline: none;
+        }
 
-.form-input::placeholder {
-    color: #475569;
-}
+        .form-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--ring-color);
+        }
 
-/* List Styles */
-.list-container {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 1.5rem;
-}
+        .form-input::placeholder {
+            color: #475569;
+        }
 
-.list-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px;
-    cursor: pointer;
-    transition: transform 0.2s ease, background 0.2s ease;
-}
+        /* List Styles */
+        .list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 1.5rem;
+        }
 
-.list-item:hover {
-    background: rgba(40, 53, 75, 0.8);
-    transform: translateY(-2px);
-}
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
 
-.list-item-content h3 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 4px;
-}
+        .list-item:hover {
+            background: rgba(40, 53, 75, 0.8);
+            transform: translateY(-2px);
+        }
 
-.list-item-content p {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-}
+        .list-item-content h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
 
-.list-item-arrow {
-    color: var(--text-secondary);
-}
+        .list-item-content p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
 
-/* Scanned Items List */
-.scanned-items {
-    margin-top: 2rem;
-    flex-grow: 1;
-    overflow-y: auto;
-}
+        .list-item-arrow {
+            color: var(--text-secondary);
+        }
 
-.scanned-item {
-    background: rgba(15, 23, 42, 0.4);
-    border: 1px solid var(--card-border);
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    font-family: monospace;
-    font-size: 0.9rem;
-    word-break: break-all;
-    display: flex;
-    align-items: center;
-}
+        /* Scanned Items List */
+        .scanned-items {
+            margin-top: 2rem;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
 
-.scanned-item::before {
-    content: "✓";
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    background: rgba(16, 185, 129, 0.2);
-    color: var(--success-color);
-    border-radius: 50%;
-    margin-right: 12px;
-    font-size: 0.75rem;
-    flex-shrink: 0;
-}
+        .scanned-item {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--card-border);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            word-break: break-all;
+            display: flex;
+            align-items: center;
+        }
 
-.empty-state {
-    text-align: center;
-    color: var(--text-secondary);
-    padding: 2rem 0;
-    font-size: 0.95rem;
-}
+        .scanned-item::before {
+            content: "✓";
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-color);
+            border-radius: 50%;
+            margin-right: 12px;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
 
-/* Scanner Container */
-#qr-reader {
-    width: 100%;
-    border-radius: 16px;
-    overflow: hidden;
-    margin-bottom: 1rem;
-    border: 2px solid var(--card-border);
-    background: black;
-}
+        .empty-state {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 2rem 0;
+            font-size: 0.95rem;
+        }
 
-#qr-reader__scan_region {
-    background: black;
-}
-#qr-reader视频 { /* Specific targeting for html5-qrcode video element */
-    border-radius: 16px;
-}
+        /* Scanner Container */
+        #qr-reader {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            border: 2px solid var(--card-border);
+            background: black;
+        }
 
-/* Camera Controls */
-.camera-controls {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 1rem;
-    background: var(--card-bg);
-    padding: 12px;
-    border-radius: 12px;
-    border: 1px solid var(--card-border);
-}
+        #qr-reader__scan_region {
+            background: black;
+        }
 
-.control-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-}
+        #qr-reader视频 {
+            /* Specific targeting for html5-qrcode video element */
+            border-radius: 16px;
+        }
 
-.zoom-slider-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-grow: 1;
-}
+        /* Camera Controls */
+        .camera-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 1rem;
+            background: var(--card-bg);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+        }
 
-.zoom-slider {
-    flex-grow: 1;
-    accent-color: var(--primary-color);
-}
+        .control-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
 
-/* Modals */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 50;
-    opacity: 1;
-    transition: opacity 0.3s ease;
-}
+        .zoom-slider-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-grow: 1;
+        }
 
-.modal-overlay.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
+        .zoom-slider {
+            flex-grow: 1;
+            accent-color: var(--primary-color);
+        }
 
-.modal-content {
-    width: 90%;
-    max-width: 320px;
-    padding: 24px;
-    text-align: center;
-    transform: scale(1);
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
+        /* Modals */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
 
-.modal-overlay.hidden .modal-content {
-    transform: scale(0.9);
-}
+        .modal-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
 
-.modal-title {
-    color: var(--danger-color);
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-}
+        .modal-content {
+            width: 90%;
+            max-width: 320px;
+            padding: 24px;
+            text-align: center;
+            transform: scale(1);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
 
-.modal-message {
-    color: var(--text-primary);
-    margin-bottom: 1.5rem;
-    font-size: 0.95rem;
-    line-height: 1.5;
-}
+        .modal-overlay.hidden .modal-content {
+            transform: scale(0.9);
+        }
 
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+        .modal-title {
+            color: var(--danger-color);
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
 
-.view-enter {
-    animation: fadeIn 0.4s ease forwards;
-}
+        .modal-message {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
 
-/* Header Flex */
-.header-flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
 
-.badge {
-    background: rgba(59, 130, 246, 0.2);
-    color: var(--primary-color);
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .view-enter {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        /* Header Flex */
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--primary-color);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
     </style>
 </head>
+
 <body>
     <div id="app" class="app-container">
         <!-- Views will be dynamically injected here by JS -->
@@ -415,73 +439,73 @@ p.subtitle {
     <!-- HTML5 QRCode library -->
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script>
-// === State Management ===
-const Storage = {
-    // Initial customers
-    customers: [
-        { id: 'kh01', name: 'Daiwa' },
-        { id: 'kh02', name: 'Khác' }
-    ],
+        // === State Management ===
+        const Storage = {
+            // Initial customers
+            customers: [
+                { id: 'kh01', name: 'Daiwa' },
+                { id: 'kh02', name: 'Khác' }
+            ],
 
-    getListsByCustomer(customerId) {
-        const lists = localStorage.getItem(`lists_${customerId}`);
-        return lists ? JSON.parse(lists) : [];
-    },
+            getListsByCustomer(customerId) {
+                const lists = localStorage.getItem(`lists_${customerId}`);
+                return lists ? JSON.parse(lists) : [];
+            },
 
-    saveList(customerId, listName) {
-        const lists = this.getListsByCustomer(customerId);
-        const newList = {
-            id: 'list_' + Date.now(),
-            name: listName,
-            createdAt: new Date().toISOString(),
-            items: [] // Array of scanned QR texts
-        };
-        lists.push(newList);
-        localStorage.setItem(`lists_${customerId}`, JSON.stringify(lists));
-        return newList;
-    },
+            saveList(customerId, listName) {
+                const lists = this.getListsByCustomer(customerId);
+                const newList = {
+                    id: 'list_' + Date.now(),
+                    name: listName,
+                    createdAt: new Date().toISOString(),
+                    items: [] // Array of scanned QR texts
+                };
+                lists.push(newList);
+                localStorage.setItem(`lists_${customerId}`, JSON.stringify(lists));
+                return newList;
+            },
 
-    getList(customerId, listId) {
-        const lists = this.getListsByCustomer(customerId);
-        return lists.find(l => l.id === listId);
-    },
+            getList(customerId, listId) {
+                const lists = this.getListsByCustomer(customerId);
+                return lists.find(l => l.id === listId);
+            },
 
-    saveScanItem(customerId, listId, scannedText) {
-        const lists = this.getListsByCustomer(customerId);
-        const listIndex = lists.findIndex(l => l.id === listId);
+            saveScanItem(customerId, listId, scannedText) {
+                const lists = this.getListsByCustomer(customerId);
+                const listIndex = lists.findIndex(l => l.id === listId);
 
-        if (listIndex > -1) {
-            // Check for duplicate
-            if (lists[listIndex].items.includes(scannedText)) {
-                return false; // Duplicate found
+                if (listIndex > -1) {
+                    // Check for duplicate
+                    if (lists[listIndex].items.includes(scannedText)) {
+                        return false; // Duplicate found
+                    }
+                    lists[listIndex].items.push(scannedText);
+                    localStorage.setItem(`lists_${customerId}`, JSON.stringify(lists));
+                    return true; // Successfully saved
+                }
+                return false;
             }
-            lists[listIndex].items.push(scannedText);
-            localStorage.setItem(`lists_${customerId}`, JSON.stringify(lists));
-            return true; // Successfully saved
+        };
+
+        // === UI Components & Views ===
+        const appDiv = document.getElementById('app');
+        const alertModal = document.getElementById('alert-modal');
+        const alertCloseBtn = document.getElementById('alert-close-btn');
+
+        alertCloseBtn.addEventListener('click', () => {
+            alertModal.classList.add('hidden');
+            // If scanner is paused due to alert, resume it (handled in scanner logic)
+        });
+
+        function showAlert(title, message) {
+            document.getElementById('alert-title').innerText = title;
+            document.getElementById('alert-message').innerText = message;
+            alertModal.classList.remove('hidden');
         }
-        return false;
-    }
-};
 
-// === UI Components & Views ===
-const appDiv = document.getElementById('app');
-const alertModal = document.getElementById('alert-modal');
-const alertCloseBtn = document.getElementById('alert-close-btn');
-
-alertCloseBtn.addEventListener('click', () => {
-    alertModal.classList.add('hidden');
-    // If scanner is paused due to alert, resume it (handled in scanner logic)
-});
-
-function showAlert(title, message) {
-    document.getElementById('alert-title').innerText = title;
-    document.getElementById('alert-message').innerText = message;
-    alertModal.classList.remove('hidden');
-}
-
-// 1. Home View
-function renderHome() {
-    appDiv.innerHTML = `
+        // 1. Home View
+        function renderHome() {
+            appDiv.innerHTML = `
         <div class="view-enter" style="display: flex; flex-direction: column; justify-content: center; flex-grow: 1;">
             <h1>Daiwa Scanner</h1>
             <p class="subtitle">Chọn khách hàng để bắt đầu</p>
@@ -494,19 +518,19 @@ function renderHome() {
             </div>
         </div>
     `;
-}
+        }
 
-// 2. Customer View (List of Lists & Create Form)
-function renderCustomer(customerId) {
-    const customer = Storage.customers.find(c => c.id === customerId);
-    if (!customer) {
-        location.hash = '#/';
-        return;
-    }
+        // 2. Customer View (List of Lists & Create Form)
+        function renderCustomer(customerId) {
+            const customer = Storage.customers.find(c => c.id === customerId);
+            if (!customer) {
+                location.hash = '#/';
+                return;
+            }
 
-    const lists = Storage.getListsByCustomer(customerId);
+            const lists = Storage.getListsByCustomer(customerId);
 
-    appDiv.innerHTML = `
+            appDiv.innerHTML = `
         <div class="view-enter">
             <button class="btn btn-back" onclick="location.hash='#/'">
                 &larr; Quay lại
@@ -541,28 +565,28 @@ function renderCustomer(customerId) {
         </div>
     `;
 
-    document.getElementById('createListForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const input = document.getElementById('listNameInput');
-        const listName = input.value.trim();
-        if (listName) {
-            Storage.saveList(customerId, listName);
-            renderCustomer(customerId); // Re-render to show new list
+            document.getElementById('createListForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const input = document.getElementById('listNameInput');
+                const listName = input.value.trim();
+                if (listName) {
+                    Storage.saveList(customerId, listName);
+                    renderCustomer(customerId); // Re-render to show new list
+                }
+            });
         }
-    });
-}
 
-// 3. List View & Scanner
-let html5QrCode = null;
+        // 3. List View & Scanner
+        let html5QrCode = null;
 
-function renderList(customerId, listId) {
-    const list = Storage.getList(customerId, listId);
-    if (!list) {
-        location.hash = `#/customer/${customerId}`;
-        return;
-    }
+        function renderList(customerId, listId) {
+            const list = Storage.getList(customerId, listId);
+            if (!list) {
+                location.hash = `#/customer/${customerId}`;
+                return;
+            }
 
-    appDiv.innerHTML = `
+            appDiv.innerHTML = `
         <div class="view-enter" style="display: flex; flex-direction: column; height: 100%;">
             <button class="btn btn-back" onclick="location.hash='#/customer/${customerId}'">
                 &larr; Quay lại
@@ -581,7 +605,7 @@ function renderList(customerId, listId) {
                      <div class="control-row" id="zoomControlRow" style="display: none;">
                         <span style="font-size: 0.8rem;">Zoom</span>
                         <div class="zoom-slider-container">
-                             <input type="range" id="zoomSlider" class="zoom-slider" min="1" max="5" step="0.1" value="1">
+                             <input type="range" id="zoomSlider" class="zoom-slider" min="1.5" max="5" step="0.1" value="1.5">
                         </div>
                      </div>
                      <div class="control-row">
@@ -609,199 +633,200 @@ function renderList(customerId, listId) {
         </div>
     `;
 
-    // Scanner Logic
-    const startScanBtn = document.getElementById('startScanBtn');
-    const stopScanBtn = document.getElementById('stopScanBtn');
-    const toggleFlashBtn = document.getElementById('toggleFlashBtn');
-    const zoomSlider = document.getElementById('zoomSlider');
-    const zoomControlRow = document.getElementById('zoomControlRow');
-    const scannerSection = document.getElementById('scannerSection');
+            // Scanner Logic
+            const startScanBtn = document.getElementById('startScanBtn');
+            const stopScanBtn = document.getElementById('stopScanBtn');
+            const toggleFlashBtn = document.getElementById('toggleFlashBtn');
+            const zoomSlider = document.getElementById('zoomSlider');
+            const zoomControlRow = document.getElementById('zoomControlRow');
+            const scannerSection = document.getElementById('scannerSection');
 
-    // Prevent multiple rapid scans of the same code
-    let lastScannedText = null;
-    let isScanning = false;
-    let flashOn = false;
-    let currentTrack = null; // Store reference to the video track
+            // Prevent multiple rapid scans of the same code
+            let lastScannedText = null;
+            let isScanning = false;
+            let flashOn = false;
+            let currentTrack = null; // Store reference to the video track
 
-    function renderScannedItems() {
-        const currentList = Storage.getList(customerId, listId);
-        const listDiv = document.getElementById('scannedItemsList');
-        const badgeSpan = document.querySelector('.badge');
+            function renderScannedItems() {
+                const currentList = Storage.getList(customerId, listId);
+                const listDiv = document.getElementById('scannedItemsList');
+                const badgeSpan = document.querySelector('.badge');
 
-        badgeSpan.innerText = `${currentList.items.length} mã`;
+                badgeSpan.innerText = `${currentList.items.length} mã`;
 
-        if (currentList.items.length === 0) {
-            listDiv.innerHTML = '<p class="empty-state">Chưa quét mã nào.</p>';
-        } else {
-            listDiv.innerHTML = [...currentList.items].reverse().map(item => `
+                if (currentList.items.length === 0) {
+                    listDiv.innerHTML = '<p class="empty-state">Chưa quét mã nào.</p>';
+                } else {
+                    listDiv.innerHTML = [...currentList.items].reverse().map(item => `
                 <div class="scanned-item">${item}</div>
             `).join('');
-        }
-    }
-
-    // Safely applying constraints to the live running video track
-    async function applyVideoConstraints(constraints) {
-        if (currentTrack && typeof currentTrack.applyConstraints === 'function') {
-            try {
-                // Merge new constraints with the existing ones
-                await currentTrack.applyConstraints({
-                    advanced: [constraints]
-                });
-            } catch (err) {
-                console.warn("Lỗi khi áp dụng constraint camera", err);
+                }
             }
-        }
-    }
 
-    async function startScanner() {
-        if (!html5QrCode) {
-            html5QrCode = new Html5Qrcode("qr-reader");
-        }
+            // Safely applying constraints to the live running video track
+            async function applyVideoConstraints(constraints) {
+                if (currentTrack && typeof currentTrack.applyConstraints === 'function') {
+                    try {
+                        // Merge new constraints with the existing ones
+                        await currentTrack.applyConstraints({
+                            advanced: [constraints]
+                        });
+                    } catch (err) {
+                        console.warn("Lỗi khi áp dụng constraint camera", err);
+                    }
+                }
+            }
 
-        scannerSection.style.display = 'block';
-        startScanBtn.style.display = 'none';
+            async function startScanner() {
+                if (!html5QrCode) {
+                    html5QrCode = new Html5Qrcode("qr-reader");
+                }
 
-        // Basic config that is safe for almost all devices
-        const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+                scannerSection.style.display = 'block';
+                startScanBtn.style.display = 'none';
 
-        try {
-            await html5QrCode.start(
-                { facingMode: "environment" }, // Prefer back camera
-                config,
-                (decodedText, decodedResult) => {
-                    // Success callback
-                    if (decodedText !== lastScannedText) {
-                        lastScannedText = decodedText;
+                // Basic config that is safe for almost all devices
+                const config = { fps: 10, qrbox: { width: 250, height: 250 } };
 
-                        // Check if alert modal is open, if so ignore scans
-                        if (!alertModal.classList.contains('hidden')) return;
+                try {
+                    await html5QrCode.start(
+                        { facingMode: "environment" }, // Prefer back camera
+                        config,
+                        (decodedText, decodedResult) => {
+                            // Success callback
+                            if (decodedText !== lastScannedText) {
+                                lastScannedText = decodedText;
 
-                        html5QrCode.pause(true); // Pause scanning while prompt is up
+                                // Check if alert modal is open, if so ignore scans
+                                if (!alertModal.classList.contains('hidden')) return;
 
-                        // Small timeout to prevent UI thread lock
-                        setTimeout(() => {
-                            if (confirm(`Mã QR: ${decodedText}\nBạn có muốn lưu?`)) {
-                                const saved = Storage.saveScanItem(customerId, listId, decodedText);
-                                if (!saved) {
-                                    // Duplicate
-                                    showAlert("Cảnh báo", "Nội dung mã QR này đã có trong danh sách. Không thể lưu trùng lặp.");
-                                } else {
-                                    // Success update UI
-                                    renderScannedItems();
-                                }
+                                html5QrCode.pause(true); // Pause scanning while prompt is up
+
+                                // Small timeout to prevent UI thread lock
+                                setTimeout(() => {
+                                    if (confirm(`Mã QR: ${decodedText}\nBạn có muốn lưu?`)) {
+                                        const saved = Storage.saveScanItem(customerId, listId, decodedText);
+                                        if (!saved) {
+                                            // Duplicate
+                                            showAlert("Cảnh báo TRÙNG TEM", "Nội dung mã QR này đã có trong danh sách. Không thể lưu trùng lặp.");
+                                        } else {
+                                            // Success update UI
+                                            renderScannedItems();
+                                        }
+                                    }
+
+                                    // Resume scanning
+                                    lastScannedText = null; // reset to allow scanning same code again if rejected previously
+                                    html5QrCode.resume();
+                                }, 100);
+                            }
+                        },
+                        (errorMessage) => {
+                            // Parse error, ignore
+                        }
+                    );
+
+                    isScanning = true;
+                    flashOn = false;
+
+                    // Lấy MediaStreamTrack trực tiếp từ video element
+                    const videoElem = document.querySelector("#qr-reader video");
+                    if (videoElem && videoElem.srcObject) {
+                        currentTrack = videoElem.srcObject.getVideoTracks()[0];
+
+                        if (currentTrack) {
+                            const capabilities = currentTrack.getCapabilities ? currentTrack.getCapabilities() : {};
+                            const settings = currentTrack.getSettings ? currentTrack.getSettings() : {};
+
+                            // Cài đặt hiển thị Zoom UI
+                            if (capabilities.zoom) {
+                                zoomSlider.min = capabilities.zoom.min || 1.5;
+                                zoomSlider.max = capabilities.zoom.max || 5;
+                                zoomSlider.step = capabilities.zoom.step || 0.1;
+                                zoomSlider.value = settings.zoom || 1.5;
+                                zoomControlRow.style.display = 'flex';
+                            } else {
+                                zoomControlRow.style.display = 'none';
                             }
 
-                            // Resume scanning
-                            lastScannedText = null; // reset to allow scanning same code again if rejected previously
-                            html5QrCode.resume();
-                        }, 100);
+                            // Cài đặt hiển thị Flash UI
+                            if (capabilities.torch) {
+                                toggleFlashBtn.style.display = 'block';
+                                toggleFlashBtn.innerText = "💡 Bật Đèn";
+                            } else {
+                                toggleFlashBtn.style.display = 'none';
+                            }
+                        }
                     }
-                },
-                (errorMessage) => {
-                    // Parse error, ignore
+
+                } catch (err) {
+                    console.error("Lỗi khi mở camera", err);
+                    alert("Không thể mở camera. Vui lòng cấp quyền.");
+                    stopScanner();
                 }
-            );
-            
-            isScanning = true;
-            flashOn = false;
-            
-            // Lấy MediaStreamTrack trực tiếp từ video element
-            const videoElem = document.querySelector("#qr-reader video");
-            if (videoElem && videoElem.srcObject) {
-                currentTrack = videoElem.srcObject.getVideoTracks()[0];
-                
+            }
+
+            zoomSlider.addEventListener('input', (e) => {
+                const zoomValue = parseFloat(e.target.value);
                 if (currentTrack) {
-                    const capabilities = currentTrack.getCapabilities ? currentTrack.getCapabilities() : {};
-                    const settings = currentTrack.getSettings ? currentTrack.getSettings() : {};
+                    applyVideoConstraints({ zoom: zoomValue });
+                }
+            });
 
-                    // Cài đặt hiển thị Zoom UI
-                    if (capabilities.zoom) {
-                        zoomSlider.min = capabilities.zoom.min || 1;
-                        zoomSlider.max = capabilities.zoom.max || 5;
-                        zoomSlider.step = capabilities.zoom.step || 0.1;
-                        zoomSlider.value = settings.zoom || 1;
-                        zoomControlRow.style.display = 'flex';
-                    } else {
-                        zoomControlRow.style.display = 'none';
-                    }
+            toggleFlashBtn.addEventListener('click', () => {
+                if (currentTrack) {
+                    flashOn = !flashOn;
+                    applyVideoConstraints({ torch: flashOn });
+                    toggleFlashBtn.innerText = flashOn ? "💡 Tắt Đèn" : "💡 Bật Đèn";
+                }
+            });
 
-                    // Cài đặt hiển thị Flash UI
-                    if (capabilities.torch) {
-                        toggleFlashBtn.style.display = 'block';
-                        toggleFlashBtn.innerText = "💡 Bật Đèn";
-                    } else {
-                        toggleFlashBtn.style.display = 'none';
+            async function stopScanner() {
+                if (html5QrCode && isScanning) {
+                    try {
+                        await html5QrCode.stop();
+                        isScanning = false;
+                        currentTrack = null;
+                    } catch (err) {
+                        console.error("Error stopping scanner", err);
                     }
                 }
+                scannerSection.style.display = 'none';
+                startScanBtn.style.display = 'flex';
             }
-            
-        } catch (err) {
-            console.error("Lỗi khi mở camera", err);
-            alert("Không thể mở camera. Vui lòng cấp quyền.");
-            stopScanner();
-        }
-    }
 
-    zoomSlider.addEventListener('input', (e) => {
-        const zoomValue = parseFloat(e.target.value);
-        if (currentTrack) {
-            applyVideoConstraints({ zoom: zoomValue });
-        }
-    });
+            startScanBtn.addEventListener('click', startScanner);
+            stopScanBtn.addEventListener('click', stopScanner);
 
-    toggleFlashBtn.addEventListener('click', () => {
-        if (currentTrack) {
-            flashOn = !flashOn;
-            applyVideoConstraints({ torch: flashOn });
-            toggleFlashBtn.innerText = flashOn ? "💡 Tắt Đèn" : "💡 Bật Đèn";
+            // Cleanup scanner when leaving view
+            window.addEventListener('hashchange', stopScanner, { once: true });
         }
-    });
 
-    async function stopScanner() {
-        if (html5QrCode && isScanning) {
-            try {
-                await html5QrCode.stop();
-                isScanning = false;
-                currentTrack = null;
-            } catch (err) {
-                console.error("Error stopping scanner", err);
+        // === Router ===
+        function router() {
+            const hash = location.hash || '#/';
+            appDiv.innerHTML = ''; // Clear current
+
+            if (hash === '#/') {
+                renderHome();
+            } else if (hash.startsWith('#/customer/')) {
+                const parts = hash.split('/');
+                if (parts.length === 3) {
+                    renderCustomer(parts[2]);
+                } else if (parts.length === 5 && parts[3] === 'list') {
+                    renderList(parts[2], parts[4]);
+                } else {
+                    location.hash = '#/';
+                }
+            } else {
+                location.hash = '#/';
             }
         }
-        scannerSection.style.display = 'none';
-        startScanBtn.style.display = 'flex';
-    }
 
-    startScanBtn.addEventListener('click', startScanner);
-    stopScanBtn.addEventListener('click', stopScanner);
-
-    // Cleanup scanner when leaving view
-    window.addEventListener('hashchange', stopScanner, { once: true });
-}
-
-// === Router ===
-function router() {
-    const hash = location.hash || '#/';
-    appDiv.innerHTML = ''; // Clear current
-
-    if (hash === '#/') {
-        renderHome();
-    } else if (hash.startsWith('#/customer/')) {
-        const parts = hash.split('/');
-        if (parts.length === 3) {
-            renderCustomer(parts[2]);
-        } else if (parts.length === 5 && parts[3] === 'list') {
-            renderList(parts[2], parts[4]);
-        } else {
-            location.hash = '#/';
-        }
-    } else {
-        location.hash = '#/';
-    }
-}
-
-// Init
-window.addEventListener('hashchange', router);
-router(); // Run on load
+        // Init
+        window.addEventListener('hashchange', router);
+        router(); // Run on load
     </script>
 </body>
+
 </html>
