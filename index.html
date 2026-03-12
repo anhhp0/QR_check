@@ -560,10 +560,14 @@
                 <span class="badge">${list.items.length} mã</span>
             </div>
 
-            <!-- Scanner Area -->
+                <!-- Scanner Area -->
             <div id="scannerSection" style="display: none; margin-bottom: 1rem;">
                 <div id="qr-reader"></div>
-                <button id="stopScanBtn" class="btn btn-back w-full" style="justify-content: center; margin-top: 10px;">Đóng Camera</button>
+                
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button id="toggleFlashBtn" class="btn btn-primary" style="flex: 1; justify-content: center; background-color: #f59e0b; color: white;">Bật Đèn</button>
+                    <button id="stopScanBtn" class="btn btn-danger" style="flex: 1; justify-content: center;">Đóng Camera</button>
+                </div>
             </div>
 
             <button id="startScanBtn" class="btn btn-primary w-full btn-icon" style="justify-content: center; padding: 16px; margin-bottom: 1rem;">
@@ -587,12 +591,13 @@
             // Scanner Logic
             const startScanBtn = document.getElementById('startScanBtn');
             const stopScanBtn = document.getElementById('stopScanBtn');
+            const toggleFlashBtn = document.getElementById('toggleFlashBtn');
             const scannerSection = document.getElementById('scannerSection');
 
             // Prevent multiple rapid scans of the same code
             let lastScannedText = null;
-            let scanTimeout = null;
             let isScanning = false;
+            let flashOn = false;
 
             function renderScannedItems() {
                 const currentList = Storage.getList(customerId, listId);
@@ -618,8 +623,19 @@
                 scannerSection.style.display = 'block';
                 startScanBtn.style.display = 'none';
 
-                const config = { fps: 30, qrbox: { width: 100, height: 100 } };
+                let config = { 
+                    fps: 30, 
+                    qrbox: { width: 250, height: 250 },
+                    // Cấu hình video nâng cao để tăng cường lấy nét
+                    videoConstraints: {
+                        facingMode: "environment",
+                        focusMode: "continuous",
+                        advanced: [{ focusMode: "continuous" }]
+                    }
+                };
 
+                // Kiểm tra xem trình duyệt có hỗ trợ lấy constraints chi tiết không. 
+                // Html5-qrcode tự động lấy nét thông thường, ta bật thêm config constraints.
                 try {
                     await html5QrCode.start(
                         { facingMode: "environment" }, // Prefer back camera
@@ -631,11 +647,6 @@
 
                                 // Check if alert modal is open, if so ignore scans
                                 if (!alertModal.classList.contains('hidden')) return;
-
-                                // Ask user to save text (Ok/Cancel prompt behavior requested by UI, 
-                                // but JS prompt blocks execution. We'll use a confirm dialog since web allows it)
-                                // Or auto-save with duplicate check. The prompt says "bấm vào Ok để lưu text". 
-                                // So we use native confirm dialog or a custom modal. Native confirm is easiest for mobile.
 
                                 // Custom confirm modal would be better, but standard confirm works for now.
                                 html5QrCode.pause(true); // Pause scanning while prompt is up
@@ -664,10 +675,40 @@
                         }
                     );
                     isScanning = true;
+                    flashOn = false;
+                    toggleFlashBtn.innerText = "Bật Đèn";
+                    
+                    // Thử lấy Track để kiểm tra xem có hỗ trợ Torch không
+                    const videoTrack = html5QrCode.getRunningTrackCameraCapabilities();
+                    if (videoTrack && !videoTrack.hasTorchCapabilities()) {
+                       // Nếu máy không có đèn flash, ẩn nút đi
+                       toggleFlashBtn.style.display = 'none';
+                    } else {
+                       toggleFlashBtn.style.display = 'flex';
+                    }
+
                 } catch (err) {
                     console.error("Lỗi khi mở camera", err);
                     alert("Không thể mở camera. Vui lòng cấp quyền sử dụng camera cho trình duyệt.");
                     stopScanner();
+                }
+            }
+
+            async function toggleFlash() {
+                if (html5QrCode && isScanning) {
+                    try {
+                        flashOn = !flashOn;
+                        await html5QrCode.applyVideoConstraints({
+                            torch: flashOn,
+                            advanced: [{ torch: flashOn }]
+                        });
+                        toggleFlashBtn.innerText = flashOn ? "Tắt Đèn" : "Bật Đèn";
+                    } catch (err) {
+                        console.error("Lỗi khi bật tắt đèn flash", err);
+                        alert("Thiết bị hoặc trình duyệt không hỗ trợ bật đèn flash.");
+                        flashOn = false;
+                        toggleFlashBtn.innerText = "Bật Đèn";
+                    }
                 }
             }
 
@@ -686,6 +727,7 @@
 
             startScanBtn.addEventListener('click', startScanner);
             stopScanBtn.addEventListener('click', stopScanner);
+            toggleFlashBtn.addEventListener('click', toggleFlash);
 
             // Cleanup scanner when leaving view
             window.addEventListener('hashchange', stopScanner, { once: true });
