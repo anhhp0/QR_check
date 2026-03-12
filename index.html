@@ -628,14 +628,14 @@ function renderList(customerId, listId) {
         const listDiv = document.getElementById('scannedItemsList');
         const badgeSpan = document.querySelector('.badge');
 
-        badgeSpan.innerText = \`\${currentList.items.length} mã\`;
+        badgeSpan.innerText = `${currentList.items.length} mã`;
 
         if (currentList.items.length === 0) {
             listDiv.innerHTML = '<p class="empty-state">Chưa quét mã nào.</p>';
         } else {
-            listDiv.innerHTML = [...currentList.items].reverse().map(item => \`
-                <div class="scanned-item">\${item}</div>
-            \`).join('');
+            listDiv.innerHTML = [...currentList.items].reverse().map(item => `
+                <div class="scanned-item">${item}</div>
+            `).join('');
         }
     }
 
@@ -680,7 +680,7 @@ function renderList(customerId, listId) {
 
                         // Small timeout to prevent UI thread lock
                         setTimeout(() => {
-                            if (confirm(\`Mã QR: \${decodedText}\\nBạn có muốn lưu?\`)) {
+                            if (confirm(`Mã QR: ${decodedText}\nBạn có muốn lưu?`)) {
                                 const saved = Storage.saveScanItem(customerId, listId, decodedText);
                                 if (!saved) {
                                     // Duplicate
