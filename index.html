@@ -423,8 +423,16 @@
 </head>
 
 <body>
-    <div id="app" class="app-container">
-        <!-- Views will be dynamically injected here by JS -->
+    <div class="app-container">
+        <div id="app" style="flex-grow: 1; display: flex; flex-direction: column;">
+            <!-- Views will be dynamically injected here by JS -->
+        </div>
+        <footer
+            style="text-align: center; margin-top: auto; padding-top: 24px; color: var(--text-primary); font-size: 0.95rem; font-weight: 500;">
+            &copy; <span id="currentYear"></span> copyright <a href="https://anhhp.io.vn" target="_blank"
+                style="color: var(--primary-color); text-decoration: none;">Phúc Anh QC04</a>
+        </footer>
+        <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
     </div>
 
     <!-- Alert Modal (Hidden by default) -->
